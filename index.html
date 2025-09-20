@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Analytics Dashboard | Princeeze</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1DA1F2;
+            --secondary: #14171A;
+            --accent: #657786;
+            --light: #F5F8FA;
+            --dark: #14171A;
+            --success: #17BF63;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: var(--dark);
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d8bd9 100%);
+            color: white;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-weight: 800;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .hero-buttons {
+            animation: fadeInUp 1.4s ease;
+        }
+        
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .bg-animation span {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .tech-stack {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .tech-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+        
+        .timeline-item {
+            margin-bottom: 60px;
+            position: relative;
+            width: 50%;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 80px;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 80px;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .timeline-content:after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            transform: rotate(45deg);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content:after {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content:after {
+            left: -10px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        
+        .demo-section {
+            background: linear-gradient(rgba(20, 23, 26, 0.9), rgba(20, 23, 26, 0.9)), url('https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .stats {
+            background: var(--light);
+            padding: 80px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            background: var(--secondary);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #0c85d0;
+            border-color: #0c85d0;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline-light {
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-light:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        .animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Particle animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .timeline:before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 80px;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+                padding-right: 0;
+                padding-left: 80px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 20px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content:after,
+            .timeline-item:nth-child(even) .timeline-content:after {
+                left: -10px;
+                right: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Twitter Analytics</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tech">Tech Stack</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#process">Process</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#demo">Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#github">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="bg-animation" id="particles"></div>
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1>Twitter Analytics Dashboard</h1>
+                    <p>A powerful, self-hosted analytics solution that works within Twitter API limitations</p>
+                    <div class="hero-buttons">
+                        <a href="https://twitter-analytics-dashboard-production.up.railway.app" class="btn btn-light btn-lg me-3" target="_blank">
+                            <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                        </a>
+                        <a href="https://github.com/Princeeze744/twitter-analytics-dashboard" class="btn btn-outline-light btn-lg" target="_blank">
+                            <i class="fab fa-github me-2"></i>GitHub Repo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Features</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4 animate">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Comprehensive Analytics</h3>
+                        <p>Track engagement metrics, top-performing content, and audience insights with beautiful visualizations.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Smart Caching</h3>
+                        <p>Intelligent caching system bypasses Twitter API rate limits for uninterrupted analytics.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>Beautiful Interface</h3>
+                        <p>Professional dashboard with Bootstrap styling and responsive design for all devices.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Data Export</h3>
+                        <p>Export analytics data to CSV for further analysis and reporting.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Self-Hosted</h3>
+                        <p>Complete control over your data with no third-party sharing or subscriptions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Easy Deployment</h3>
+                        <p>Deploy to Railway with minimal configuration and automatic scaling.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech" class="section tech-stack">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technology Stack</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <h4>Python</h4>
+                        <p>Backend logic and data processing</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4>Flask</h4>
+                        <p>Lightweight web framework</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <h4>Twitter API</h4>
+                        <p>Data source and integration</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h4>Pandas</h4>
+                        <p>Data analysis and manipulation</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fab fa-bootstrap"></i>
+                        </div>
+                        <h4>Bootstrap</h4>
+                        <p>Responsive UI framework</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h4>Railway</h4>
+                        <p>Deployment platform</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <h4>GitHub</h4>
+                        <p>Version control and collaboration</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="tech-item">
+                        <div class="tech-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h4>RESTful API</h4>
+                        <p>Backend communication</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Process Section -->
+    <section id="process" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Development Process</h2>
+                <p>How we built and deployed the Twitter Analytics Dashboard</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item animate">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Project Planning</h4>
+                        <p>Defined project requirements, architecture, and user flow. Created wireframes and planned the technology stack.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Twitter API Integration</h4>
+                        <p>Implemented Twitter API v2 integration with proper authentication and rate limiting handling.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Backend Development</h4>
+                        <p>Built Flask backend with data processing, analytics calculations, and caching system.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Frontend Development</h4>
+                        <p>Created responsive dashboard UI with Bootstrap, interactive charts, and real-time data display.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Testing & Optimization</h4>
+                        <p>Tested the application with various Twitter accounts, optimized performance, and fixed bugs.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Deployment to Railway</h4>
+                        <p>Configured the application for production, set up environment variables, and deployed to Railway.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Live Demo</h2>
+                <p>Experience the Twitter Analytics Dashboard in action</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center animate">
+                    <p class="lead mb-4">The dashboard is fully functional and deployed on Railway. You can analyze any public Twitter account's performance metrics.</p>
+                    <a href="https://twitter-analytics-dashboard-production.up.railway.app" class="btn btn-primary btn-lg me-3" target="_blank">
+                        <i class="fas fa-external-link-alt me-2"></i>Try Live Demo
+                    </a>
+                    <p class="mt-4 text-muted">Note: Due to Twitter API rate limits, you might experience delays during high traffic.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat1">0</div>
+                        <p>Lines of Code</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat2">0</div>
+                        <p>API Endpoints</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat3">0</div>
+                        <p>Features</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 animate">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat4">0</div>
+                        <p>Hours of Development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Section -->
+    <section id="github" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>GitHub Repository</h2>
+                <p>Explore the source code and contribute to the project</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center animate">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">twitter-analytics-dashboard</h4>
+                            <p class="card-text">A beautiful Twitter analytics dashboard that works within free API limitations.</p>
+                            <div class="d-flex justify-content-center mb-3">
+                                <span class="badge bg-primary me-2">Python</span>
+                                <span class="badge bg-info me-2">Flask</span>
+                                <span class="badge bg-success me-2">Bootstrap</span>
+                                <span class="badge bg-secondary">Twitter API</span>
+                            </div>
+                            <a href="https://github.com/Princeeze744/twitter-analytics-dashboard" class="btn btn-dark" target="_blank">
+                                <i class="fab fa-github me-2"></i>View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                    <p class="lead">The project is open source and available for anyone to use, modify, and contribute to.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h3>Twitter Analytics Dashboard</h3>
+                    <p>A powerful, self-hosted analytics solution for Twitter accounts.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="https://github.com/Princeeze744" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>&copy; 2023 Twitter Analytics Dashboard. Created by Princeeze.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Create particles for hero background
+            createParticles();
+            
+            // Animate stats counting
+            animateStats();
+        });
+        
+        // Create particles animation
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particlesCount = 30;
+            
+            for (let i = 0; i < particlesCount; i++) {
+                const particle = document.createElement('span');
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 20 + 10;
+                
+                // Set styles
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationName = 'float';
+                particle.style.animationIterationCount = 'infinite';
+                particle.style.animationTimingFunction = 'ease-in-out';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Animate statistics counting
+        function animateStats() {
+            const stat1 = document.getElementById('stat1');
+            const stat2 = document.getElementById('stat2');
+            const stat3 = document.getElementById('stat3');
+            const stat4 = document.getElementById('stat4');
+            
+            const targetValues = [1500, 5, 8, 40];
+            const duration = 2000; // ms
+            const interval = 20; // ms
+            
+            animateValue(stat1, 0, targetValues[0], duration);
+            animateValue(stat2, 0, targetValues[1], duration);
+            animateValue(stat3, 0, targetValues[2], duration);
+            animateValue(stat4, 0, targetValues[3], duration);
+            
+            function animateValue(element, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * (end - start) + start);
+                    element.textContent = value.toLocaleString();
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+        }
+    </script>
+</body>
+</html>
